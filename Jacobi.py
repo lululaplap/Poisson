@@ -1,4 +1,8 @@
-class Poisson():
+import numpy as np
+from scipy import signal
+import scipy.ndimage.filters as filter
+
+class Jacobi():
     def __init__(self,N,phi,rho):
 
         self.phi = phi
@@ -14,6 +18,7 @@ class Poisson():
         self.E = np.gradient(self.phi)
         gi, gj = np.gradient(self.phi[self.m,:,:])
         self.B = np.array([gi,-gj,np.zeros((self.N,self.N))])
+        return self.phi
 
     def update(self,i):
         for j in range(100):
@@ -26,6 +31,10 @@ class Poisson():
         print(np.shape(self.E[0][self.m,:,:]))
         ax.quiver(x,y,z,self.E[1],self.E[0],self.E[2])
 
-    def sim(self,n):
-        for i in range(n):
-            self.step()
+    def sim(self,thresh):
+        error = np.inf
+        while error > thresh:
+            old = self.phi
+            new = self.step()
+            error = np.mean(np.abs(new-old))
+            print(error)
