@@ -8,6 +8,13 @@ class GS(Poisson):
         self.rho = np.pad(self.rho,((1,1),(1,1),(1,1)),'constant',constant_values=((0,0),(0,0),(0,0)))
         self.phi_next = self.phi
 
+    def calcFeild(self):
+        print(self.phi.shape)
+        self.phi = self.phi[1:-1,1:-1,1:-1]
+        print(self.phi.shape)
+        return super().calcFeild()
+
+
     def step(self,w=1):
 
         self.phi_next = np.copy(self.phi)

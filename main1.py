@@ -16,17 +16,18 @@ def main():
     phi = np.random.uniform(-0.01,0.01,size=(N,N,N))
     rho = np.zeros((N,N,N))
     m = int(N/2)
-    rho[m,m,m] = 1
+    rho[:,m,m] = 1
+    P = Poisson(N,phi,rho)
     P = GS(N,phi,rho)
-
     #print(P.sim(0.0001))#,w=1.75))
     d = P.dist()
-    P.sim(0.00001)
-    plt.scatter(np.log(d[:,:,:].reshape(-1)),np.log(P.phi[1:-1,1:-1,1:-1].reshape(-1)))
+    P.sim(0.001)
+    #plt.scatter(np.log(d[:,:,:].reshape(-1)),np.log(P.phi[:,:,:].reshape(-1)))
     plt.show()
     #GS.SOR(10**(-5),50,N,phi,rho)
-    # P.calcFeild()
-    # P.plot()
+    P.calcFeild()
+    P.plot()
+
 
 
 main()

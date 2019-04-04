@@ -70,18 +70,18 @@ class Jacobi():
         #return dists
     def plot(self):
         norm = -1*np.sum(self.E[:])
-        normB = 1#np.sum(P.B)
+        normB = np.sum(self.B)
         u = self.E[0]/norm
         v = self.E[1]/norm
         q = self.E[2]/norm
         #ax.quiver(x,y,z,z,v,u, normalize=True)
         # plt.quiver(q[self.m,2:-3,2:-3],v[self.m,2:-3,2:-3],angles='xy',scale=None,pivot='tip',color='r')
         #plt.quiver(P.B[2][:,P.m,:],P.B[0][:,P.m,:],angles='uv',scale=None)#,pivot='tip')
-        #plt.quiver(P.B[0]/normB,P.B[1]/normB,angles='uv',scale=400*100000,pivot='mid',color='r')
+        plt.quiver(self.B[0]/normB,self.B[1]/normB,angles='xy',scale=None)
         # print(np.shape(P.Em))
         # print(P.Em)
 
         #plt.imshow(self.phi[self.m,2:-3,2:-3])#/np.sum(P.phi[m,:,:]))
-        plt.quiver(q[self.m,:,:],v[self.m,:,:],angles='xy',scale=None)#,pivot='tip')
-        plt.imshow(self.phi[self.m,:,:],cmap='cool')#/np.sum(P.phi[m,:,:]))
+        # plt.quiver(q[self.m,:,:],v[self.m,:,:],angles='xy',scale=None)#,pivot='tip')
+        # plt.imshow(self.phi[self.m,:,:],cmap='cool')#/np.sum(P.phi[m,:,:]))
         plt.show()
