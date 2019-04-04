@@ -37,4 +37,5 @@ class Jacobi():
             old = self.phi
             new = self.step()
             error = np.mean(np.abs(new-old))
+            #self.phi += #error*1.8
             print(error)

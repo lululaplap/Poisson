@@ -21,7 +21,7 @@ def main():
 
     P = Poisson(N,phi,rho)
     #ani = animation.FuncAnimation(fig, P.update)
-    P.sim(0.00001)
+    P.sim(10*10**(-5))
 
     x, y, z = np.meshgrid(np.linspace(0, P.N, P.N),
                   np.linspace(0, P.N, P.N),
