@@ -12,17 +12,17 @@ ax = fig.add_subplot(111)#,projection='3d')
 
 def main():
 
-    N = 20
+    N = 30
     phi = np.random.uniform(-0.01,0.01,size=(N,N,N))
     rho = np.zeros((N,N,N))
     m = int(N/2)
     rho[m,m,m] = 1
     P = GS(N,phi,rho)
 
-    print(P.sim(1**(-4),w=1))
-    #P.SOR(10**(-4),n=5)
-    P.calcFeild()
-    P.plot()
+    #print(P.sim(10**(-5),w=1.75))
+    P.SOR(10**(-5),20,N,phi,rho)
+    #P.calcFeild()
+    #P.plot()
 
 
 main()

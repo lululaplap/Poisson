@@ -34,25 +34,27 @@ class Jacobi():
         self.B = np.array([gi,-gj,np.zeros((self.N,self.N))])
         return [self.E,self.B]
 
-    def sim(self,thresh,w=1):
+    def sim(self,thresh=0.001,w=1):
         error = np.inf
         i=0
-        while error > thresh:
+        maxIter = 150
+        while error > thresh and i<maxIter:
+
             old = self.phi
             self.phi = self.step(w)
             error = np.mean(np.abs(self.phi-old))
-            #error = np.mean(np.abs(self.step(w)))
-            #self.phi = self.phi_next
             print(error)
             i+=1
         return(i)
-    def SOR(self,thresh,n=20):
+    @classmethod
+    def SOR(cls,thresh,n,N,phi,rho):
         w = np.linspace(1,2,n)
         x = np.zeros(n)
         for i in range(0,n):
-            x[i] = self.sim(thresh,w=w[i])
-            print(w[i])
-        plt.plot(w,x)
+            P = cls(N,phi,rho)
+            x[i] = P.sim(thresh,w=w[i])
+            print("---------------------------")
+        plt.plot(x,w)
         plt.show()
     def plot(self):
         norm = -1*np.sum(self.E[:])
@@ -68,6 +70,6 @@ class Jacobi():
         # print(P.Em)
 
         #plt.imshow(self.phi[self.m,2:-3,2:-3])#/np.sum(P.phi[m,:,:]))
-        plt.quiver(q[self.m,:,:],v[self.m,:,:],angles='xy',scale=None,pivot='tip',color='r')
-        plt.imshow(self.phi[self.m,:,:])#/np.sum(P.phi[m,:,:]))
+        plt.quiver(q[self.m,:,:],v[self.m,:,:],angles='xy',scale=None,pivot='tip')
+        plt.imshow(self.phi[self.m,:,:],cmap='cool')#/np.sum(P.phi[m,:,:]))
         plt.show()
