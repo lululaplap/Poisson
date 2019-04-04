@@ -60,12 +60,12 @@ class Jacobi():
     def dist(self):
         # i,j,k = np.linspace[0,self.N,self.N]
         # X,Y,Z = np.meshgrid(i,j,k)
-        inds = np.indices((self.N,self.N))
+        inds = np.indices((self.N,self.N,self.N))
         print(inds.shape)
         x = np.power((inds[0]-self.m),2)
         y = np.power((inds[1]-self.m),2)
-
-        dists = np.sqrt(x+y)
+        z = np.power((inds[2]-self.m),2)
+        dists = np.sqrt(x+y+z)
         return dists
         #return dists
     def plot(self):

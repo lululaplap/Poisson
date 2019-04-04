@@ -20,7 +20,9 @@ def main():
     P = GS(N,phi,rho)
 
     #print(P.sim(0.0001))#,w=1.75))
-    plt.imshow(P.dist())
+    d = P.dist()
+    P.sim(0.00001)
+    plt.scatter(np.log(d[:,:,:].reshape(-1)),np.log(P.phi[1:-1,1:-1,1:-1].reshape(-1)))
     plt.show()
     #GS.SOR(10**(-5),50,N,phi,rho)
     # P.calcFeild()
