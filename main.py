@@ -9,7 +9,7 @@ fig = plt.figure()
 ax = fig.add_subplot(111)#,projection='3d')
 
 def main():
-    N = 100
+    N = 50
     x, y = np.meshgrid(np.linspace(-1,1,N), np.linspace(-1,1,N))
     d = np.sqrt(x*x+y*y)
     sigma, mu = 1.0, 0.1
@@ -21,7 +21,7 @@ def main():
 
     P = Poisson(N,phi,rho)
     #ani = animation.FuncAnimation(fig, P.update)
-    P.sim(10*10**(-5))
+    P.sim(10*10**(-6))
 
     x, y, z = np.meshgrid(np.linspace(0, P.N, P.N),
                   np.linspace(0, P.N, P.N),
