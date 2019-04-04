@@ -54,7 +54,7 @@ class Jacobi():
             P = cls(N,phi,rho)
             x[i] = P.sim(thresh,w=w[i])
             print("---------------------------")
-        plt.plot(x,w)
+        plt.plot(w,x)
         plt.show()
     def plot(self):
         norm = -1*np.sum(self.E[:])
