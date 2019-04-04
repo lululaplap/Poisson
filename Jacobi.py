@@ -2,6 +2,7 @@ import numpy as np
 from scipy import signal
 import scipy.ndimage.filters as filter
 import matplotlib.pyplot as plt
+from scipy.spatial import distance
 
 class Jacobi():
     def __init__(self,N,phi,rho):
@@ -14,7 +15,7 @@ class Jacobi():
         #self.phi = np.reshape(self.phi,(self.N,self.N,self.N))
         self.kernal = (1/6.0)*np.array([[[0,0,0], [0,1,0], [0,0,0]] ,[[0,1,0], [1,0,1], [0,1,0]] ,[[0,0,0], [0,1,0], [0,0,0]]])
 
-    def step(self):
+    def step(self,w):
         self.phi = filter.convolve(self.phi,self.kernal, mode='constant',cval=0)+self.rho/6.0
         return self.phi
 
@@ -37,12 +38,12 @@ class Jacobi():
     def sim(self,thresh=0.001,w=1):
         error = np.inf
         i=0
-        maxIter = 150
+        maxIter = 250
         while error > thresh and i<maxIter:
 
             old = self.phi
             self.phi = self.step(w)
-            error = np.mean(np.abs(self.phi-old))
+            error = np.max(np.abs(self.phi-old))
             print(error)
             i+=1
         return(i)
@@ -53,9 +54,20 @@ class Jacobi():
         for i in range(0,n):
             P = cls(N,phi,rho)
             x[i] = P.sim(thresh,w=w[i])
-            print("---------------------------")
+            print("--------------{}/{}-------------".format(i,n))
         plt.plot(w,x)
         plt.show()
+    def dist(self):
+        # i,j,k = np.linspace[0,self.N,self.N]
+        # X,Y,Z = np.meshgrid(i,j,k)
+        inds = np.indices((self.N,self.N))
+        print(inds.shape)
+        x = np.power((inds[0]-self.m),2)
+        y = np.power((inds[1]-self.m),2)
+
+        dists = np.sqrt(x+y)
+        return dists
+        #return dists
     def plot(self):
         norm = -1*np.sum(self.E[:])
         normB = 1#np.sum(P.B)
@@ -70,6 +82,6 @@ class Jacobi():
         # print(P.Em)
 
         #plt.imshow(self.phi[self.m,2:-3,2:-3])#/np.sum(P.phi[m,:,:]))
-        plt.quiver(q[self.m,:,:],v[self.m,:,:],angles='xy',scale=None,pivot='tip')
+        plt.quiver(q[self.m,:,:],v[self.m,:,:],angles='xy',scale=None)#,pivot='tip')
         plt.imshow(self.phi[self.m,:,:],cmap='cool')#/np.sum(P.phi[m,:,:]))
         plt.show()

@@ -19,10 +19,12 @@ def main():
     rho[m,m,m] = 1
     P = GS(N,phi,rho)
 
-    #print(P.sim(10**(-5),w=1.75))
-    P.SOR(10**(-5),20,N,phi,rho)
-    #P.calcFeild()
-    #P.plot()
+    #print(P.sim(0.0001))#,w=1.75))
+    plt.imshow(P.dist())
+    plt.show()
+    #GS.SOR(10**(-5),50,N,phi,rho)
+    # P.calcFeild()
+    # P.plot()
 
 
 main()

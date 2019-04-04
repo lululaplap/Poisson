@@ -9,7 +9,7 @@ fig = plt.figure()
 ax = fig.add_subplot(111)#,projection='3d')
 
 def main():
-    N = 50
+    N = 10
     x, y = np.meshgrid(np.linspace(-1,1,N), np.linspace(-1,1,N))
     d = np.sqrt(x*x+y*y)
     sigma, mu = 1.0, 0.1
