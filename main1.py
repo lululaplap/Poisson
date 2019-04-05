@@ -19,6 +19,7 @@ def main(args):
     rho = np.zeros((N,N,N))
     m = int(N/2)
     thresh = float(args[5])
+    norm=False
 
     if str(args[2]) == 'E':
         rho[m,m,m] = 1
@@ -29,7 +30,8 @@ def main(args):
     elif str(args[3]) == 'Gauss':
         P = GS(N,phi,rho)
     if str(args[4]) == 'plot':
-        P.calcFeild()
+        P.sim(thresh)
+        P.calcFeild(norm)
         if str(args[2]) == 'E':
             P.plotE()
         elif str(args[2]) == 'B':

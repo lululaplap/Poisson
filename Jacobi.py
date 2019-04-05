@@ -29,10 +29,22 @@ class Jacobi():
                       np.linspace(0, self.N, self.N))
         print(np.shape(self.E[0][self.m,:,:]))
         ax.quiver(x,y,z,self.E[1],self.E[0],self.E[2])
-    def calcFeild(self):
+    def calcFeild(self,norm=False):
         self.E = np.gradient(self.phi)
+
         gi, gj = np.gradient(self.phi[self.m,:,:])
-        self.B = np.array([gi,-gj,np.zeros((self.N,self.N))])
+        self.B = -1*np.array([gi,-gj,np.zeros((self.N,self.N))])
+        if norm:
+            normB= np.sqrt(self.B[0]**2+self.B[1]**2)#np.linalg.norm(self.B)
+            normE= np.sqrt(self.E[0]**2+self.E[1]**2+self.E[2]**2)#np.linalg.norm(self.B)
+        else:
+            normB =1
+            normE = 1
+        self.B /= normB
+        u = self.E[0]/normE
+        v = self.E[1]/normE
+        q = self.E[2]/normE
+        self.E  = [q,v,u]
         return [self.E,self.B]
 
     def sim(self,thresh=0.001,w=1):
@@ -47,16 +59,7 @@ class Jacobi():
             print(error)
             i+=1
         return(i)
-    @classmethod
-    def SOR(cls,thresh,n,N,phi,rho):
-        w = np.linspace(1,2,n)
-        x = np.zeros(n)
-        for i in range(0,n):
-            P = cls(N,phi,rho)
-            x[i] = P.sim(thresh,w=w[i])
-            print("--------------{}/{}-------------".format(i+1,n))
-        plt.plot(w,x)
-        plt.show()
+    
     def dist(self):
         inds = np.indices((self.N,self.N,self.N))
         print(inds.shape)
@@ -67,15 +70,12 @@ class Jacobi():
         return dists
 
     def plotB(self):
-        normB = np.sum(self.B)
-        plt.quiver(self.B[0]/normB,self.B[1]/normB,angles='xy',scale=None)
+        plt.quiver(self.B[0],self.B[1],angles='xy',scale=None)
         plt.imshow(self.phi[self.m,:,:],cmap='cool')#/np.sum(P.phi[m,:,:]))
 
     def plotE(self):
-        norm = -1*np.sum(self.E[:])
-        u = self.E[0]/norm
-        v = self.E[1]/norm
-        q = self.E[2]/norm
+
+
         #plt.quiver(q[self.m,2:-3,2:-3],v[self.m,2:-3,2:-3],angles='xy',scale=None,pivot='tip',color='r')
-        plt.quiver(q[self.m,:,:],v[self.m,:,:],angles='xy',scale=None)
+        plt.quiver(self.E[0][self.m,:,:],self.E[1][self.m,:,:],angles='xy',scale=None)
         plt.imshow(self.phi[self.m,:,:],cmap='cool')#/np.sum(P.phi[m,:,:]))
