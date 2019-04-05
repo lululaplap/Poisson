@@ -55,7 +55,7 @@ class Jacobi():
 
             old = self.phi
             self.phi = self.step(w)
-            error = np.max(np.abs(self.phi-old))
+            error = np.sum(np.abs(self.phi-old))
             print(error)
             i+=1
         return(i)
