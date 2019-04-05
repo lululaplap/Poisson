@@ -45,9 +45,6 @@ class Jacobi():
         v = self.E[1]/normE
         q = self.E[2]/normE
         self.E  = [q,v,u]
-
-        np.savetxt("E.csv",self.E,delimiter=",")
-        np.savetxt("B.csv",self.B,delimiter=",")
         return [self.E,self.B]
 
     def sim(self,thresh=0.001,w=1):

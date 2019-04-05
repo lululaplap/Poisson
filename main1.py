@@ -42,8 +42,10 @@ def main(args):
         P.calcFeild()
         if str(args[2]) == 'E':
             plt.scatter(np.log(d[:,:,:].reshape(-1)),np.log(P.phi[:,:,:].reshape(-1)))
+            np.savetxt("EPhi.csv",P.phi[:,:,:].reshape(-1),delimiter=",")
         elif str(args[2]) == 'B':
             plt.scatter(np.log(d[m,:,:].reshape(-1)),np.log(P.phi[m,:,:].reshape(-1)))
+            np.savetxt("BPhi.csv",P.phi[:,:,:].reshape(-1),delimiter=",")
 
     elif str(args[4]) == 'SOR':
         P.SOR(10**(-5),50,N,phi,rho)
