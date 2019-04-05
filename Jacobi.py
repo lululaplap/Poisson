@@ -54,7 +54,7 @@ class Jacobi():
         for i in range(0,n):
             P = cls(N,phi,rho)
             x[i] = P.sim(thresh,w=w[i])
-            print("--------------{}/{}-------------".format(i,n))
+            print("--------------{}/{}-------------".format(i+1,n))
         plt.plot(w,x)
         plt.show()
     def dist(self):
