@@ -58,8 +58,6 @@ class Jacobi():
         plt.plot(w,x)
         plt.show()
     def dist(self):
-        # i,j,k = np.linspace[0,self.N,self.N]
-        # X,Y,Z = np.meshgrid(i,j,k)
         inds = np.indices((self.N,self.N,self.N))
         print(inds.shape)
         x = np.power((inds[0]-self.m),2)
@@ -67,24 +65,17 @@ class Jacobi():
         z = np.power((inds[2]-self.m),2)
         dists = np.sqrt(x+y+z)
         return dists
-        #return dists
+
     def plotB(self):
-        norm = -1*np.sum(self.E[:])
         normB = np.sum(self.B)
+        plt.quiver(self.B[0]/normB,self.B[1]/normB,angles='xy',scale=None)
+        plt.imshow(self.phi[self.m,:,:],cmap='cool')#/np.sum(P.phi[m,:,:]))
+
+    def plotE(self):
+        norm = -1*np.sum(self.E[:])
         u = self.E[0]/norm
         v = self.E[1]/norm
         q = self.E[2]/norm
-
-        plt.quiver(self.B[0]/normB,self.B[1]/normB,angles='xy',scale=None)
-        plt.imshow(self.phi[self.m,:,:],cmap='cool')#/np.sum(P.phi[m,:,:]))
-        plt.show()
-    def plotE(self):
-        norm = -1*np.sum(self.E[:])
-        normB = np.sum(self.B)
-        u = self.E[0]/norm
-        v = self.E[1]/norm
-            q = self.E[2]/norm
         #plt.quiver(q[self.m,2:-3,2:-3],v[self.m,2:-3,2:-3],angles='xy',scale=None,pivot='tip',color='r')
         plt.quiver(q[self.m,:,:],v[self.m,:,:],angles='xy',scale=None)
         plt.imshow(self.phi[self.m,:,:],cmap='cool')#/np.sum(P.phi[m,:,:]))
-        plt.show()
